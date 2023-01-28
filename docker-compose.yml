@@ -30,8 +30,6 @@ services:
     command: cd ./beringlab
     command: celery -A beringlab worker --loglevel=info
     ports: []
-    volumes:
-      - ./app/mediafiles:/home/app/web/mediafiles
     depends_on:
       - rabbitmq
       - postgresql  
