@@ -1,0 +1,54 @@
+version: '3.7'
+
+services:
+  web: &Beringlab
+    build:
+      dockerfile: Dockerfile
+    expose:
+      - 8000
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgresql
+      
+  rabbitmq:
+    image: rabbitmq:3.7-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    expose:
+      - 15672
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=RabbitMQ-My-Cookies
+      - RABBITMQ_DEFAULT_USER=beringlab
+      - RABBITMQ_DEFAULT_PASS=beringlab
+
+  celery_worker:
+    <<: *Beringlab
+    container_name: 'backend_celery_worker'
+    command: cd ./beringlab
+    command: celery -A beringlab worker --loglevel=info
+    ports: []
+    volumes:
+      - ./app/mediafiles:/home/app/web/mediafiles
+    depends_on:
+      - rabbitmq
+      - postgresql  
+
+  postgresql:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=beringlab
+      - POSTGRES_PASSWORD=beringlab
+      - POSTGRES_DB=beringlab
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - TZ=Asia/Seoul
+    volumes:
+      - ./volume:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data:
