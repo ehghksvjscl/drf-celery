@@ -1,16 +1,23 @@
 ## Installation steps
 
-1. python3이 설치 되어 있는지 확인 하십시요
-2. repository를 clone 하세요
-3. `virtualenv venv`를 사용해서 가상환경을 만드세요
-4. `source venv/bin/activate`를 이용해서 가상환경을 활성화 하세요
+1. repository를 clone 하세요
+2. docker가 설치되어 있지 않다면 설치하세요
+3. docker-compose를 설치 하세요
+3. docker-compose를 이용해서 실행 하세요
+    `docker-compose up -d --build`
 
-- 윈도우 환경 :  `source venv\Scripts\activate`
+## Architecture
+![images](https://user-images.githubusercontent.com/22442843/215271595-dbd6b422-0cbb-4932-a327-7cd0dd44019d.png)
 
-5. `pip install -m pip install -U pip wheel`를 통해 pip 최신버전으로 업그레이드 하세요
-6. `pip install -r requirements.txt`를 통해 패키지를 다운로드 받으세요
-7. `python manage.py test`를 통해 테스트를 실행 하세요.
-7. `python manage.py runserver`를 통해 실행 시키세요.
+## API List
+
+### works
+
+| Method | Path | Description |
+|:------:|:----:|:-----------:|
+| GET    | /works/ | test 비동기 API |
+
+
 
 ## Commit Message Type
 
